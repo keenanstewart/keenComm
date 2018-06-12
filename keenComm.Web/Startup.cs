@@ -8,6 +8,9 @@ using Microsoft.AspNetCore.SpaServices.Webpack;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
+using keenComm.Web.Controllers;
+using System.Reflection;
+
 namespace keenComm.Web
 {
     public class Startup
@@ -22,6 +25,8 @@ namespace keenComm.Web
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+			//var assembly = Assembly.Load(WordSmithController("keenComm.Web.Controllers."));
+			//services.AddDbContext<ToDo>
             services.AddMvc();
         }
 
@@ -47,12 +52,18 @@ namespace keenComm.Web
             {
                 routes.MapRoute(
                     name: "default",
-                    template: "{controller=Home}/{action=Index}/{id?}");
+                    template: "{controller=Home}/{action=Index}/{id?}"
+				//new { }
+				);
 
-                routes.MapSpaFallbackRoute(
-                    name: "spa-fallback",
-                    defaults: new { controller = "Home", action = "Index" });
-            });
+			  routes.MapRoute(
+				  name: "word-smith",
+				  template: "Word/{word}");
+
+			  //routes.MapSpaFallbackRoute(
+			  //    name: "spa-fallback",
+			  //    defaults: new { controller = "Home", action = "Index" });
+		  });
         }
     }
 }
